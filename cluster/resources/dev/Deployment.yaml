@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-deployment
+  namespace: dev
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      test: deployment
+  template:
+    metadata:
+      name: test-deployment-pod
+      labels:
+        test: deployment
+    spec:
+      containers:
+        - name: test-deployment-pod
+          image: miskers/test_image
+          ports:
+            - containerPort: 8002
