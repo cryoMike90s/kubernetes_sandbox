@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ui
+  name: bus
   namespace: dev
 spec:
   replicas: 3
   selector:
     matchLabels:
-      service: ui
+      service: bus
   template:
     metadata:
-      name: ui
+      name: bus
       labels:
-        service: ui
+        service: bus
     spec:
       containers:
-        - name: ui
+        - name: bus
           image: miskers/test_image
           ports:
             - containerPort: 8002
