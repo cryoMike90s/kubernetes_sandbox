@@ -7,7 +7,7 @@ spec:
   volumes:
     - name: test-volume
       persistentVolumeClaim:
-        claimName: pvc-nfs-static-data
+        claimName: pvc-nfs-dynamic-data
   containers:
     - name: test-pod
       image: miskers/test_image
