@@ -1,11 +1,11 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nfs-csi-tescior
+  name: nfs-csi-db-dev
 provisioner: nfs.csi.k8s.io
 parameters:
-  server: nfs-server.kube-system.svc.cluster.local
-  share: /export/volumes/dynamic
+  server: 192.168.0.66
+  share: /export/volumes/dynamic/db-dev
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 allowVolumeExpansion: true

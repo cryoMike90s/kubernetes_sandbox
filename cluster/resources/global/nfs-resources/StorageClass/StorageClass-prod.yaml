@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: nfs-csi-prod
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: nfs-server-prod.kube-system.svc.cluster.local
+  share: /export/volumes/dynamic/prod
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+allowVolumeExpansion: true
+mountOptions:
+  - nfsvers=4.1

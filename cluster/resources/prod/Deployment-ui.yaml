@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  namespace: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      service: ui
+  template:
+    metadata:
+      name: ui
+      labels:
+        service: ui
+    spec:
+      containers:
+        - name: ui
+          image: miskers/test_image
+          ports:
+            - containerPort: 8002
