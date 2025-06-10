@@ -14,8 +14,16 @@ spec:
       labels:
         service: bus
     spec:
+      volumes:
+        - name: bus-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs-prod-data
       containers:
         - name: bus
           image: miskers/test_image
           ports:
             - containerPort: 8002
+          volumeMounts:
+            - name: bus-volume
+              mountPath: "/mnt"
+      

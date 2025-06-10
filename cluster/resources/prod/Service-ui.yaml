@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     service: ui
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: service-port
       port: 8002

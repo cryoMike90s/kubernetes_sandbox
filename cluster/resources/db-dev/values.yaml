@@ -1,4 +1,12 @@
+auth:
+  user: admin
+  password: haslo
+  postgresPassword: haslo
+global:
+  defaultStorageClass: nfs-csi-db-dev
 primary:
+  labels:
+    service: db
   resources:
     limits:
       ephemeral-storage: 1Gi
@@ -7,3 +15,10 @@ primary:
       cpu: 100m
       ephemeral-storage: 50Mi
       memory: 128Mi
+  networkPolicy:
+    enabled: true
+    allowExternal: false
+    ingressNSMatchLabels:
+      env: dev
+    ingressNSPodMatchLabels:
+      service: bus

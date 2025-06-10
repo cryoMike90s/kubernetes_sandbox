@@ -1,0 +1,14 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: restrict-access-to-ui-tier-only
+  namespace: dev
+spec:
+  podSelector:
+    matchLabels:
+      service: bus
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          service: ui

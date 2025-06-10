@@ -14,8 +14,15 @@ spec:
       labels:
         service: ui
     spec:
+      volumes:
+        - name: ui-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs-prod-data
       containers:
         - name: ui
           image: miskers/test_image
           ports:
             - containerPort: 8002
+          volumeMounts:
+            - name: ui-volume
+              mountPath: "/mnt"
