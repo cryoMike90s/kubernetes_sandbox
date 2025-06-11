@@ -7,8 +7,16 @@ spec:
   podSelector:
     matchLabels:
       service: bus
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          service: ui
+  policyTypes:
+  - Egress
+  egress:
+  # Allow DNS resolution to any destination on port 53
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
+  # Allow internal cluster communication
+  - to:
+    - ipBlock:
+        cidr: 10.0.0.0/8  # Replace with your actual cluster CIDR

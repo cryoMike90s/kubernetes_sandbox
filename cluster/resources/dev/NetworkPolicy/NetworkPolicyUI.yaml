@@ -1,0 +1,22 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: restrict-access-to-bus-tier-only
+  namespace: dev
+spec:
+  podSelector:
+    matchLabels:
+      service: ui
+  policyTypes:
+  - Egress
+  - Ingress
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            service: bus
+  egress:
+  # Allow internal cluster communication
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0  # Replace with your actual cluster CIDR
