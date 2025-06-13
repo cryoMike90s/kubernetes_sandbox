@@ -1,0 +1,10 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manage-pods
+  labels:
+    role: placeholder
+rules:
+  - apiGroups: ["*"]
+    resources: ["pods"]
+    verbs: ["create", "delete", "deletecollection", "get", "list", "patch", "update", "watch"]

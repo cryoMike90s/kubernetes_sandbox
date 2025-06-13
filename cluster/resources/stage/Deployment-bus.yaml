@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bus
+  namespace: stage
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      service: bus
+  template:
+    metadata:
+      name: bus
+      labels:
+        service: bus
+    spec:
+      volumes:
+        - name: bus-volume
+          persistentVolumeClaim:
+            claimName: pvc-nfs-stage-data
+      containers:
+        - name: bus
+          image: miskers/test_image
+          ports:
+            - containerPort: 8002
+          volumeMounts:
+            - name: bus-volume
+              mountPath: "/mnt"
+      

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrator
+  namespace: dev
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrate
+          image: miskers/postgresql-migrate:latest
+          args:
+            - -path=/app/migrations
+            - -database=$(DATABASE_URL)?sslmode=disable
+            - up
+          envFrom:
+            - secretRef:
+                name: api-golang-database-url
+      restartPolicy: OnFailure
