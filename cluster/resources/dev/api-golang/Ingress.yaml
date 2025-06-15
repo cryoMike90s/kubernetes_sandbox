@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+  namespace: dev
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: my-app-internal.com
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: api-golang
+                port:
+                  number: 8000
+            path: /
+ 
