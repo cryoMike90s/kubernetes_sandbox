@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-ingress
+  name: example-ingress-2
   namespace: dev
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -12,6 +12,13 @@ spec:
     - host: my-app-internal.com
       http:
         paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: client-react-nginx
+                port:
+                  number: 8080
+            path: /
           - pathType: Prefix
             backend:
               service:

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: client-react-nginx
-  namespace: demo-app
+  namespace: dev
   labels:
     app: client-react-nginx
 spec:
@@ -16,7 +16,7 @@ spec:
         app: client-react-nginx
     spec:
       containers:
-        - image: sidpalas/devops-directive-docker-course-client-react-nginx:foobarbaz
+        - image: miskers/client-react:latest
           name: client-react-nginx
           ports:
             - containerPort: 8080
