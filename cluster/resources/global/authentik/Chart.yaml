@@ -1,0 +1,20 @@
+#dependencies:
+#  - name: authentik
+#    version: "2025.6.1"
+#    repository: "https://charts.goauthentik.io"
+#  - name: postgresql
+#    version: "16.7.11"
+#    repository: "https://charts.bitnami.com/bitnami"
+#    alias: postgresql 
+
+
+#apiVersion: v2
+#name: authentik-deployment
+#version: 0.1.0
+#dependencies:
+#  - name: authentik
+#    version: "2024.12.1"  # Use latest version
+#    repository: "https://charts.goauthentik.io"
+#  - name: postgresql
+#    version: "15.5.32"    # Use latest version
+#    repository: "https://charts.bitnami.com/bitnami"

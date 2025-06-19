@@ -1,0 +1,66 @@
+# Authentik configuration
+authentik:
+  authentik:
+    secret_key: "zvq5Kj3rdr8sim6Cm0zRYs1n2tZH882i2650GtFWLkYwoH6Mlg"
+    
+    env:
+#      AUTHENTIK_SECRET_KEY: "zvq5Kj3rdr8sim6Cm0zRYs1n2tZH882i2650GtFWLkYwoH6Mlg"
+#      AUTHENTIK_POSTGRESQL__HOST: "{{ .Release.Name }}-postgresql"
+#      AUTHENTIK_POSTGRESQL__NAME: "authentik"
+#      AUTHENTIK_POSTGRESQL__USER: "postgres"
+      AUTHENTIK_POSTGRESQL__PASSWORD: "ThisIsNotASecurePassword"
+#      AUTHENTIK_POSTGRESQL__PORT: "5432"
+#      AUTHENTIK_ERROR_REPORTING__ENABLED: "true"
+
+    # Database configuration - connect to external PostgreSQL
+    postgresql:
+      host: "{{ .Release.Name }}-postgresql"  # Service name of PostgreSQL chart
+      name: "authentik"   # Database name
+      user: "postgres"   # Database user
+      password: "ThisIsNotASecurePassword"
+      port: 5432
+    
+    # Disable built-in PostgreSQL since we're using external chart
+    postgresql:
+      enabled: false
+    
+    # Redis configuration
+    redis:
+      enabled: true
+    
+    # Error reporting
+    error_reporting:
+      enabled: true
+  
+  # Server configuration
+  server:
+      ingress:
+          # Specify kubernetes ingress controller class name
+          ingressClassName: nginx
+          enabled: true
+          hosts:
+              - authentik-local-spt.com
+  
+# External PostgreSQL chart configuration
+postgresql:
+  global:
+    defaultStorageClass: nfs-csi-db-dev
+  
+  auth:
+    username: "authentik"
+    password: "ThisIsNotASecurePassword"
+    postgresPassword: "ThisIsNotASecurePassword"
+    database: "authentik"
+  
+  primary:
+    persistence:
+      enabled: true
+      size: 3Gi
+
+    initdb:
+      scripts:
+        init.sql: |
+          CREATE DATABASE authentik;
+          CREATE USER authentik WITH PASSWORD 'ThisIsNotASecurePassword';
+          GRANT ALL PRIVILEGES ON DATABASE authentik TO authentik;
+          ALTER USER authentik CREATEDB;

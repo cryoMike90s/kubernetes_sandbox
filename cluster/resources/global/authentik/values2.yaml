@@ -1,0 +1,35 @@
+authentik:
+    secret_key: "zvq5Kj3rdr8sim6Cm0zRYs1n2tZH882i2650GtFWLkYwoH6Mlg"
+    # This sends anonymous usage-data, stack traces on errors and
+      # performance data to sentry.io, and is fully opt-in
+    error_reporting:
+        enabled: true
+    postgresql:
+        password: "ThisIsNotASecurePassword"
+
+server:
+    ingress:
+        # Specify kubernetes ingress controller class name
+        ingressClassName: nginx
+        enabled: true
+        hosts:
+            - authentik-local-spt.com
+   
+postgresql:
+    global:
+      defaultStorageClass: nfs-csi-db-dev
+    enabled: true
+    auth:
+        password: "ThisIsNotASecurePassword"
+redis:
+    global:
+      defaultStorageClass: nfs-csi-db-dev
+    enabled: true
+
+#postgresql:
+#  global:
+#    defaultStorageClass: nfs-csi-db-dev
+#  auth:
+#    password: "ThisIsNotASecurePassword"
+#    postgresPassword: "ThisIsNotASecurePassword"
+ 
