@@ -1,0 +1,11 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: miskers
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aggregationRole
+subjects:
+- kind: User
+  name: miskers@protonmail.com
