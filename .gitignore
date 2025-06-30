@@ -29,3 +29,10 @@ terraform.rc
 
 *.tgz
 .env
+
+
+devbox.lock
+.venv
+.devbox
+.helm-charts
+bin/
