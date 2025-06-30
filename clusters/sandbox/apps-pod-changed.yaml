@@ -9,5 +9,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/sandbox
+  path: ./apps/sandbox/podinfo-changed
   prune: true
