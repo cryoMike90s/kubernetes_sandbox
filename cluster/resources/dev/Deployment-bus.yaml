@@ -17,7 +17,7 @@ spec:
       volumes:
         - name: bus-volume
           persistentVolumeClaim:
-            claimName: pvc-nfs-dev-data
+            claimName: pvc-test
       containers:
         - name: bus
           image: miskers/test_image:latest
