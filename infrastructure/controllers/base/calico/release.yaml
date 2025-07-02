@@ -1,0 +1,14 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: calico
+spec:
+  releaseName: calico
+  chart:
+    spec:
+      chart: calico
+      sourceRef:
+        kind: HelmRepository
+        name: calico
+        namespace: 
+  interval: 10m
