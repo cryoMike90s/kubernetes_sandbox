@@ -6,7 +6,7 @@ spec:
   releaseName: cert-manager
   chart:
     spec:
-      chart: jetstack
+      chart: cert-manager
       sourceRef:
         kind: HelmRepository
         name: cert-manager
