@@ -1,28 +1,28 @@
-#apiVersion: kustomize.toolkit.fluxcd.io/v1
-#kind: Kustomization
-#metadata:
-#  name: infrastructure-configs
-#  namespace: flux-system
-#spec:
-#  interval: 60s
-#  timeout: 5m
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./infrastructure/configs/sandbox
-#  prune: true
-#---
-#
-#apiVersion: kustomize.toolkit.fluxcd.io/v1
-#kind: Kustomization
-#metadata:
-#  name: infrastructure-controllers
-#  namespace: flux-system
-#spec:
-#  interval: 60s
-#  timeout: 5m
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#  path: ./infrastructure/controllers/sandbox
-#  prune: true
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-configs
+  namespace: flux-system
+spec:
+  interval: 60s
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./infrastructure/configs/sandbox
+  prune: true
+---
+
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-controllers
+  namespace: flux-system
+spec:
+  interval: 60s
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./infrastructure/controllers/sandbox
+  prune: true
