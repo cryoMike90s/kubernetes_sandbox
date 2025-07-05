@@ -21,6 +21,9 @@ spec:
       containers:
         - name: bus
           image: miskers/test_image:latest
+          envFrom:
+            - secretRef:
+                name: test-external-secret
           ports:
             - containerPort: 8002
           volumeMounts:
