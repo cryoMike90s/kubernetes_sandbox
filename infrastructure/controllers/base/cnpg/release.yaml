@@ -6,11 +6,11 @@ spec:
   releaseName: cnpg
   chart:
     spec:
-      chart: cnpg
+      chart: cloudnative-pg
       version: "0.24.0"
       sourceRef:
         kind: HelmRepository
-        name: cloudnative-pg
+        name: cnpg
         namespace: cnpg-system
   interval: 10m
   values:
