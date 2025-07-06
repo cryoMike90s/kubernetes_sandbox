@@ -1,10 +1,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: OCIRepository
+kind: HelmRepository
 metadata:
   name: keycloak
   namespace: keycloak
 spec:
-  interval: 1m
-  ref:
-    tag: 24.7.5
-  url: oci://registry-1.docker.io/bitnami/keycloak
+  type: oci
+  interval: 10m
+  url: oci://registry-1.docker.io/bitnamicharts/keycloak

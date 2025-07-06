@@ -5,10 +5,14 @@ metadata:
   namespace: keycloak
 spec:
   releaseName: keycloak
-  chartRef:
-    kind: OCIRepository
-    name: keycloak
-  interval: 1m
+  chart:
+    spec:
+      chart: keycloak
+      sourceRef:
+        kind: HelmRepository
+        name: keycloak
+        namespace: keycloak
+  interval: 10m
   values:
     production: true
     auth:
