@@ -1,0 +1,27 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-db-cnpg-v1
+  namespace: keycloak-db
+spec:
+  description: Postgres cluster for the keycloa kapplication
+  imageName: quay.io/enterprisedb/postgresql:16.1
+  instances: 1
+
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: keycloak
+      secret: 
+        name: keycloak-credentials
+
+  inheritedMetadata:
+    labels:
+      app: keycloak
+
+  storage:
+    size: 1Gi
+
+  resources:
+    requests:
+      memory: 600Mi
