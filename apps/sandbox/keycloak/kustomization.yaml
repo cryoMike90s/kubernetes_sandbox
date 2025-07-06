@@ -7,4 +7,4 @@ resources:
   - certificate-root.yaml
   - issuer.yaml
 patches:
-  - release.yaml
+  - path: release.yaml
