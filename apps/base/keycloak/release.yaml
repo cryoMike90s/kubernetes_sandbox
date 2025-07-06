@@ -8,3 +8,28 @@ spec:
     kind: OCIRepository
     name: keycloak
   interval: 10m
+  values:
+    production: true
+    auth:
+    postgresql:
+      enabled: false
+    externalDatabase:
+      host: keycloak-db-cnpg-v1-rw.keycloak-db.svc.cluster.local
+      user: keycloak
+      existingSecret: keycloak-credentials
+      existingSecretPasswordKey: password
+    tls:
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      hostname: keycloak-local-spt.lab
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      servicePort: https
+      tls: true
+      extraTls:
+      - hosts:
+        - keycloak-local-spt.lab
+        secretName: keycloak-tls
+
