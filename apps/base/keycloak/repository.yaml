@@ -4,7 +4,7 @@ metadata:
   name: keycloak
   namespace: keycloak
 spec:
-  interval: 10m
+  interval: 1m
   ref:
-    tag: latest
+    tag: 24.7.5
   url: oci://registry-1.docker.io/bitnamicharts/keycloak
