@@ -5,4 +5,5 @@ metadata:
   namespace: keycloak
 spec:
   interval: 10m
+  type: "oci"
   url: https://charts.bitnami.com/bitnami
