@@ -4,12 +4,7 @@ metadata:
   name: keycloak
 spec:
   releaseName: keycloak
-  chart:
-    spec:
-      chart: keycloak
-      version: "24.7.4"
-      sourceRef:
-        kind: HelmRepository
-        name: keycloak
-        namespace: keycloak
+  chartRef:
+    kind: OCIRepository
+    name: keycloak
   interval: 10m
