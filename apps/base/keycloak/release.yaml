@@ -7,7 +7,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: keycloak
-  interval: 10m
+  interval: 1m
   values:
     production: true
     auth:
