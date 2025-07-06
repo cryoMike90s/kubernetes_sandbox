@@ -12,6 +12,3 @@ spec:
         name: keycloak
         namespace: keycloak
   interval: 10m
-  values:
-    crds:
-      enabled: true

@@ -5,5 +5,3 @@ metadata:
 spec:
   interval: 10m
   url: https://charts.bitnami.com/bitnami
-
-
