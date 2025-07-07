@@ -6,6 +6,10 @@ metadata:
   namespace: keycloak
 spec:
   values:
+    auth:
+      adminUser: misialkes
+      existingSecret: keycloak-admin-credentials
+      passwordSecretKey: ui_password
     production: true
     postgresql:
       enabled: false
