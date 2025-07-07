@@ -12,7 +12,7 @@ spec:
     externalDatabase:
       host: keycloak-db-cnpg-v1-rw.keycloak-db.svc.cluster.local
       user: keycloak
-      existingSecret: keycloak-credentials
+      existingSecret: keycloak-admin-credentials
       existingSecretPasswordKey: password
     tls:
       enabled: true
