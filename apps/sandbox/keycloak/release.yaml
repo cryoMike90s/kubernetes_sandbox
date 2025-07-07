@@ -10,6 +10,7 @@ spec:
     postgresql:
       enabled: false
     externalDatabase:
+      database: keycloak
       host: keycloak-db-cnpg-v1-rw.keycloak-db.svc.cluster.local
       user: keycloak
       existingSecret: keycloak-admin-credentials
