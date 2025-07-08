@@ -45,7 +45,7 @@ spec:
           protocol: UDP
         envFrom:
           - configMapRef:
-              name: pihole-configMap
+              name: pihole-configmap
           - secretRef:
               name: pihole-secret
         volumeMounts:
