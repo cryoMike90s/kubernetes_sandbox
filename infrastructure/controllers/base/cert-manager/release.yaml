@@ -15,5 +15,6 @@ spec:
   values:
     crds:
       enabled: true
-    networkPolicy:
-      enabled: true
+    webhook:
+      networkPolicy:
+        enabled: true
