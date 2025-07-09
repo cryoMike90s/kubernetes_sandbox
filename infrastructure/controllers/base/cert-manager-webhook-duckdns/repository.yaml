@@ -2,7 +2,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: cert-manager-webhook-duckdns
-  namespace: cert-manager-webhook-duckdns
+  namespace: cert-manager
 spec:
   interval: 10m
   url: https://ebrianne.github.io/cert-manager-webhook-duckdns
