@@ -5,6 +5,6 @@ metadata:
   namespace: cert-manager-webhook-duckdns
 spec:
   interval: 10m
-  url: ebrianne.github.io/cert-manager-webhook-duckdns
+  url: https://ebrianne.github.io/cert-manager-webhook-duckdns
 
 
