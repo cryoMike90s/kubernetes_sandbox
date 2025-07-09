@@ -7,7 +7,7 @@ spec:
   releaseName: cert-manager-webhook-duckdns
   chart:
     spec:
-      chart: cert-manager-webhook-duckdns
+      chart: ebrianne.github.io
       sourceRef:
         kind: HelmRepository
         name: cert-manager-webhook-duckdns
