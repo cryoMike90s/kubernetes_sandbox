@@ -5,9 +5,10 @@ metadata:
   name: pihole-svc-tcp
   annotations:
     metallb.universe.tf/allow-shared-ip: "pihole"
-    external-dns.alpha.kubernetes.io/hostname: "pihole.lab.local"
+#    external-dns.alpha.kubernetes.io/hostname: "pihole.lab.local"
     external-dns.alpha.kubernetes.io/ttl: "60"
 spec:
+  externalTrafficPolicy: Local
   selector:
     app: pihole
   ports:
@@ -29,6 +30,7 @@ metadata:
   annotations:
     metallb.universe.tf/allow-shared-ip: "pihole"
 spec:
+  externalTrafficPolicy: Local
   selector:
     app: pihole
   ports:
