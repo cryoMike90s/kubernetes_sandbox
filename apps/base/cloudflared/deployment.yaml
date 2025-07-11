@@ -38,7 +38,7 @@ spec:
       volumes:
       - name: creds
         secret:
-          secretName: cloudflare-tunnel
+          secretName: test
       - name: config
         configMap:
           name: cloudflared
