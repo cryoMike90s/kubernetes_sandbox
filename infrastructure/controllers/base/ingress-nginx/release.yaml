@@ -14,3 +14,7 @@ spec:
         name: ingress-nginx
         namespace: ingress-nginx
   interval: 10m
+  values:
+    controller:
+      service:
+        externalTrafficPolicy: "Local"
