@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bus-ingress
+  namespace: dev
+  annotations:
+#    nginx.ingress.kubernetes.io/use-regex: "true"
+#    nginx.ingress.kubernetes.io/rewrite-target: /$2
+#    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: test.miskers.org
+      http:
+        paths:
+          - pathType: Prefix
+            backend:
+              service:
+                name: bus-service
+                port:
+                  number: 8002
+            path: /
+ # tls:
+ #   - hosts:
+ #       - test.miskers.org
+ #     secretName: letsencrypt-staging

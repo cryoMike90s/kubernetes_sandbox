@@ -10,4 +10,5 @@ spec:
   ports:
     - name: service-port
       port: 8002
+      targetPort: 8002
       protocol: TCP
