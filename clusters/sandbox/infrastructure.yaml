@@ -19,6 +19,8 @@ metadata:
   name: infrastructure-controllers
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: infra-controllers
   interval: 60s
   timeout: 5m
   sourceRef:
