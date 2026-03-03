@@ -5,3 +5,4 @@ resources:
   - podinfo
   - keycloak
   - pihole
+  - prometheus

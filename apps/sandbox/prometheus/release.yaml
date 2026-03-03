@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  values:
+    grafana:
+      enabled: false
+    alertmanager:
+      enabled: false
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - prometheus-local-spt.lab
+        paths:
+          - /
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: default-kubernetes-sandbox-storageclass
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Gi
