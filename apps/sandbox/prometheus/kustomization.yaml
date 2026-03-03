@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ../../base/prometheus/
+  - grafana-secret.yaml
 patches:
   - path: release.yaml

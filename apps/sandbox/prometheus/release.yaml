@@ -6,7 +6,23 @@ metadata:
 spec:
   values:
     grafana:
-      enabled: false
+      enabled: true
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - grafana-local-spt.lab
+        paths:
+          - /
+      persistence:
+        enabled: true
+        storageClassName: default-kubernetes-sandbox-storageclass
+        accessModes:
+          - ReadWriteOnce
+        size: 5Gi
+      admin:
+        existingSecret: grafana-admin-credentials
+        passwordKey: admin_password
     alertmanager:
       enabled: false
     prometheus:
