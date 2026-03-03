@@ -22,7 +22,6 @@ spec:
         size: 5Gi
       admin:
         existingSecret: grafana-admin-credentials
-        passwordKey: admin_password
     alertmanager:
       enabled: false
     prometheus:
