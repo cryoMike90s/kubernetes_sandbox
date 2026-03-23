@@ -1,0 +1,8 @@
+# Local variable values — may contain IPs or other env-specific data
+terraform.tfvars
+
+# OpenTofu/Terraform state — contains secrets (certs, tokens, keys)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
