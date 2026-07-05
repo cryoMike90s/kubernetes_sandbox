@@ -16,5 +16,11 @@ spec:
   install:
     crds: CreateReplace
     createNamespace: true
+    skipCRDs: false
   upgrade:
     crds: CreateReplace
+  values:
+    installation:
+      enabled: false
+    apiServer:
+      enabled: false
