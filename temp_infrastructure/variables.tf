@@ -1,6 +1,13 @@
 variable "node_ip" {
   type        = string
-  description = "Static IP address of your Talos node (e.g. '192.168.1.100'). The node must already have this IP before you apply."
+  default     = "192.168.0.66"
+  description = "Static IP address of the control plane node. The node must already have this IP before you apply."
+}
+
+variable "worker_ips" {
+  type        = list(string)
+  default     = ["192.168.0.192"]
+  description = "Static IP addresses of worker nodes. Each node must already have its IP assigned before you apply."
 }
 
 variable "install_disk" {
@@ -17,13 +24,13 @@ variable "cluster_name" {
 
 variable "talos_version" {
   type        = string
-  default     = "v1.8.0"
+  default     = "v1.13.0"
   description = "Talos Linux version to install. Check https://github.com/siderolabs/talos/releases for the latest."
 }
 
 variable "kubernetes_version" {
   type        = string
-  default     = "v1.31.2"
+  default     = "v1.32.3"
   description = "Kubernetes version that Talos will run. Must be compatible with your chosen talos_version. See the Talos support matrix."
 }
 
@@ -37,6 +44,12 @@ variable "service_subnet" {
   type        = string
   default     = "10.96.0.0/12"
   description = "CIDR block for Kubernetes Service (ClusterIP) IPs. Must not overlap with your LAN or pod_subnet."
+}
+
+variable "gateway" {
+  type        = string
+  default     = "192.168.0.1"
+  description = "Default gateway for worker nodes."
 }
 
 variable "nameservers" {

@@ -2,7 +2,7 @@ data "talos_client_configuration" "this" {
   cluster_name         = var.cluster_name
   client_configuration = talos_machine_secrets.this.client_configuration
   endpoints            = [var.node_ip]
-  nodes                = [var.node_ip]
+  nodes                = concat([var.node_ip], var.worker_ips)
 }
 
 # WARNING: This overwrites any existing kubeconfig at that path.

@@ -1,10 +1,23 @@
+resource "talos_machine_configuration_apply" "worker" {
+  for_each = toset(var.worker_ips)
+
+  client_configuration        = talos_machine_secrets.this.client_configuration
+  machine_configuration_input = data.talos_machine_configuration.worker[each.key].machine_configuration
+  endpoint                    = each.key
+  node                        = each.key
+
+  apply_mode = "auto"
+
+  depends_on = [talos_machine_bootstrap.this]
+}
+
 resource "talos_machine_configuration_apply" "this" {
   client_configuration        = talos_machine_secrets.this.client_configuration
   machine_configuration_input = data.talos_machine_configuration.this.machine_configuration
   endpoint                    = var.node_ip
   node                        = var.node_ip
 
-  apply_mode = "staged_if_needing_reboot"
+  apply_mode = "auto"
 }
 
 resource "talos_machine_bootstrap" "this" {
