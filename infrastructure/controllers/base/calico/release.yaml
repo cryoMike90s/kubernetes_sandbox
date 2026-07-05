@@ -12,6 +12,10 @@ spec:
         name: projectcalico
         namespace: tigera-operator
   interval: 10m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     installation:
       enabled: true
