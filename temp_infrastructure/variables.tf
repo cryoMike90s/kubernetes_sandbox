@@ -6,7 +6,7 @@ variable "node_ip" {
 
 variable "worker_ips" {
   type        = list(string)
-  default     = ["192.168.0.192"]
+  default     = ["192.168.0.80", "192.168.0.213"]
   description = "Static IP addresses of worker nodes. Each node must already have its IP assigned before you apply."
 }
 
@@ -24,8 +24,8 @@ variable "cluster_name" {
 
 variable "talos_version" {
   type        = string
-  default     = "v1.13.0"
-  description = "Talos Linux version to install. Check https://github.com/siderolabs/talos/releases for the latest."
+  default     = "v1.14.0"
+  description = "Talos Linux version to install. Check https://github.com/siderolabs/talos/releases for the latest. NOTE: this is the config-generation contract only (talos_machine_secrets is already keyed to v1.14.0 in state from an earlier apply) - it does not control the actually-installed OS version on any node."
 }
 
 variable "kubernetes_version" {
@@ -57,4 +57,3 @@ variable "nameservers" {
   default     = ["1.1.1.1", "8.8.8.8"]
   description = "DNS servers pushed to the node. Talos uses these for hostname resolution during and after install."
 }
-

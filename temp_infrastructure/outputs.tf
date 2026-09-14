@@ -1,6 +1,6 @@
-data "talos_client_configuration" "this" {
+data "talos_client_configuration" "controlplane" {
   cluster_name         = var.cluster_name
-  client_configuration = talos_machine_secrets.this.client_configuration
+  client_configuration = talos_machine_secrets.controlplane.client_configuration
   endpoints            = [var.node_ip]
   nodes                = concat([var.node_ip], var.worker_ips)
 }
@@ -11,25 +11,25 @@ data "talos_client_configuration" "this" {
 # -----------------------------------------------------------------------------
 
 resource "local_file" "kubeconfig" {
-  content         = talos_cluster_kubeconfig.this.kubeconfig_raw
+  content         = talos_cluster_kubeconfig.controlplane.kubeconfig_raw
   filename        = pathexpand("~/.kube/config")
   file_permission = "0600" # kubeconfig contains credentials — keep it private
 }
 
 resource "local_file" "talosconfig" {
-  content         = data.talos_client_configuration.this.talos_config
+  content         = data.talos_client_configuration.controlplane.talos_config
   filename        = pathexpand("~/.talos/config")
   file_permission = "0600"
 }
 
 output "kubeconfig_raw" {
-  value       = talos_cluster_kubeconfig.this.kubeconfig_raw
+  value       = talos_cluster_kubeconfig.controlplane.kubeconfig_raw
   sensitive   = true
   description = "Raw kubeconfig YAML. Use: tofu output -raw kubeconfig_raw > /tmp/kube.yaml"
 }
 
 output "talosconfig_raw" {
-  value       = data.talos_client_configuration.this.talos_config
+  value       = data.talos_client_configuration.controlplane.talos_config
   sensitive   = true
   description = "Raw talosconfig YAML. Use: tofu output -raw talosconfig_raw > /tmp/talos.yaml"
 }
