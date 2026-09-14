@@ -12,6 +12,12 @@ spec:
         name: nfs-server-provisioner
         namespace: nfs-system
   interval: 10m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
   values:
     persistence:
       enabled: true
