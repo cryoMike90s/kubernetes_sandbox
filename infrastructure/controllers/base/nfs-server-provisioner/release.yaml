@@ -24,11 +24,15 @@ spec:
       storageClass: local-path
       accessMode: ReadWriteOnce
       size: 200Gi
-    # We already have csi-driver-nfs + our own StorageClass pointed at this
-    # server's Service; don't also register the chart's built-in dynamic
-    # provisioner/StorageClass.
+    # This chart's Ganesha server only exports paths its own controller
+    # creates dynamically for PVCs using its own provisioner name - it does
+    # NOT statically export /export for an external provisioner (csi-driver-nfs)
+    # to mount. Use its built-in StorageClass/provisioner directly instead,
+    # keeping the same name so nothing downstream has to change.
     storageClass:
-      create: false
+      create: true
+      defaultClass: true
+      name: default-kubernetes-sandbox-storageclass
     # Local storage is node-local: pin the server to the worker with the most
     # free disk (192.168.0.80) so its PVC always lands on the same node.
     nodeSelector:
