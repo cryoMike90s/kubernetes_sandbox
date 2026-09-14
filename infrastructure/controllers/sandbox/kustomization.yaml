@@ -6,6 +6,8 @@ resources:
  # - cnpg
   - external-secrets
   - ingress-nginx
+  - local-path-provisioner
   - metallb
   - nfs-driver
+  - nfs-server-provisioner
 

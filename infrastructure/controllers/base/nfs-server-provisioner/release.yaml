@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nfs-server-provisioner
+spec:
+  releaseName: nfs-server-provisioner
+  chart:
+    spec:
+      chart: nfs-server-provisioner
+      sourceRef:
+        kind: HelmRepository
+        name: nfs-server-provisioner
+        namespace: nfs-system
+  interval: 10m
+  values:
+    persistence:
+      enabled: true
+      storageClass: local-path
+      accessMode: ReadWriteOnce
+      size: 200Gi
+    # We already have csi-driver-nfs + our own StorageClass pointed at this
+    # server's Service; don't also register the chart's built-in dynamic
+    # provisioner/StorageClass.
+    storageClass:
+      create: false
+    # Local storage is node-local: pin the server to the worker with the most
+    # free disk (192.168.0.80) so its PVC always lands on the same node.
+    nodeSelector:
+      kubernetes.io/hostname: talos-d06-bmc
