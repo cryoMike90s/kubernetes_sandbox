@@ -5,4 +5,5 @@ resources:
   - cert-manager
   - cluster-maintenance
   - external-secrets
+  - gateway-api
   - metallb
