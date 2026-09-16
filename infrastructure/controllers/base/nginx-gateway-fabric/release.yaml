@@ -5,11 +5,8 @@ metadata:
   namespace: nginx-gateway
 spec:
   releaseName: nginx-gateway-fabric
-  chart:
-    spec:
-      chart: nginx-gateway-fabric
-      sourceRef:
-        kind: OCIRepository
-        name: nginx-gateway-fabric
-        namespace: nginx-gateway
+  chartRef:
+    kind: OCIRepository
+    name: nginx-gateway-fabric
+    namespace: nginx-gateway
   interval: 10m
