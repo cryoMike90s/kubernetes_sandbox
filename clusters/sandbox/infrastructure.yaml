@@ -13,6 +13,10 @@ spec:
     name: flux-system
   path: ./infrastructure/configs/sandbox
   prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
 ---
 
 apiVersion: kustomize.toolkit.fluxcd.io/v1

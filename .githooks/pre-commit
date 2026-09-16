@@ -1,0 +1,29 @@
+#!/bin/bash
+# Blocks committing a *.secret.yaml file that isn't SOPS-encrypted.
+# Install once per clone: git config core.hooksPath .githooks
+
+staged_secret_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.secret\.ya?ml$')
+
+if [ -z "$staged_secret_files" ]; then
+  exit 0
+fi
+
+unencrypted=""
+for f in $staged_secret_files; do
+  if ! grep -q '^sops:' "$f" 2>/dev/null; then
+    unencrypted="$unencrypted $f"
+  fi
+done
+
+if [ -n "$unencrypted" ]; then
+  echo "ERROR: the following *.secret.yaml file(s) are staged but not SOPS-encrypted:"
+  for f in $unencrypted; do
+    echo "  - $f"
+  done
+  echo ""
+  echo "Encrypt before committing:"
+  echo "  sops --encrypt --encrypted-regex '^(data|stringData)$' --in-place <file>"
+  exit 1
+fi
+
+exit 0

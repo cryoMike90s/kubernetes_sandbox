@@ -107,14 +107,31 @@ cluster/resources/         # LEGACY — manually applied manifests; not reconcil
 
 ### Secret management
 
-- **Never** commit raw secrets.
-- All secrets are sourced from **Infisical** via External Secrets Operator.
+- **Never** commit raw (plaintext) secrets — SOPS-encrypted manifests are fine and expected.
+- All application secrets are sourced from **Infisical** via External Secrets Operator.
 - `ExternalSecret` and `SecretStore`/`ClusterSecretStore` resources live in `infrastructure/configs/`.
-- To bootstrap Infisical credentials on a fresh cluster, run:
-  ```bash
-  infrastructure/configs/sandbox/external-secrets/secret-zero.sh
+- The `auth-credentials` secret (used by `ClusterSecretStore/sandbox-secretstore` to authenticate to Infisical) is itself managed via **SOPS**, not created imperatively: it's committed as an encrypted `Secret` manifest at `infrastructure/configs/sandbox/external-secrets/auth-credentials.secret.yaml`, decrypted automatically by Flux's `kustomize-controller` on every reconcile.
+- `secretstore.yaml` and `auth-credentials.secret.yaml` live directly under `infrastructure/configs/sandbox/external-secrets/`, not `base/` — both are inherently cluster/environment-specific (Infisical project slug, environment, and credentials), so putting them in `base/` would leak sandbox-specific secrets/config into any future cluster overlay reusing that base. `infrastructure/configs/base/external-secrets/secretstore.yaml.example` is a generic, unwired template to copy from when setting up a new cluster overlay.
+- To add or edit a SOPS-encrypted secret manifest:
+  ```yaml
+  # 1. write the manifest with plaintext stringData values (never git add yet)
+  # 2. encrypt in place, encrypting only data/stringData so kustomize can still parse the resource:
+  sops --encrypt --encrypted-regex '^(data|stringData)$' --in-place <file>.secret.yaml
+  # 3. verify the values show as ENC[...] before committing
+  cat <file>.secret.yaml
   ```
-  This creates the single "secret-zero" Kubernetes secret that ESO uses to authenticate with Infisical. Everything else is synced automatically.
+  `.sops.yaml` (repo root) scopes encryption to any file matching `*.secret.yaml`.
+- **Cluster bootstrap (one-time, per-cluster):** Flux needs the age private key to decrypt SOPS secrets. After a fresh cluster/`flux bootstrap`, recreate it:
+  ```bash
+  cat <path-to-age.agekey> | kubectl create secret generic sops-age \
+    --namespace=flux-system \
+    --from-file=age.agekey=/dev/stdin
+  ```
+  The age private key itself is never stored in git — keep it in a password manager or similar. Losing it means every SOPS-encrypted secret in the repo must be re-encrypted with a new key.
+- **Safety net:** a pre-commit hook in `.githooks/pre-commit` blocks committing any `*.secret.yaml` file that isn't already SOPS-encrypted. `core.hooksPath` is a local git setting, not synced by git itself — every clone must run this once:
+  ```bash
+  git config core.hooksPath .githooks
+  ```
 
 ### Debugging reconciliation failures
 
