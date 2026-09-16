@@ -16,7 +16,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: failed-pod-cleanup
-              image: bitnami/kubectl:1.32
+              image: rancher/kubectl:v1.32.13
               args:
                 - delete
                 - pods
