@@ -3,5 +3,6 @@ kind: Kustomization
 resources:
   - calico
   - cert-manager
+  - cluster-maintenance
   - external-secrets
   - metallb
