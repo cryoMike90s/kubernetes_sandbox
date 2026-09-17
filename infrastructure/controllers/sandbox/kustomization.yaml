@@ -9,6 +9,7 @@ resources:
   - ingress-nginx
   - local-path-provisioner
   - metallb
+  - metrics-server
   - nfs-driver
   - nfs-server-provisioner
   - nginx-gateway-fabric

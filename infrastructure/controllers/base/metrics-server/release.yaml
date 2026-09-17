@@ -1,0 +1,19 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: metrics-server
+  namespace: metrics-server
+spec:
+  releaseName: metrics-server
+  chart:
+    spec:
+      chart: metrics-server
+      version: "*"
+      sourceRef:
+        kind: HelmRepository
+        name: metrics-server
+        namespace: metrics-server
+  interval: 10m
+  values:
+    args:
+      - --kubelet-insecure-tls
