@@ -100,6 +100,8 @@ cluster/resources/         # LEGACY — manually applied manifests; not reconcil
 3. Add the new app directory to `apps/sandbox/kustomization.yaml` resources list.
 4. Push to `main`. Flux will reconcile within 60 seconds.
 
+**ConfigMap config-file mounts (`subPath`) don't hot-reload:** if an app's config is injected via individual `subPath` mounts from a ConfigMap (e.g. `apps/base/homepage/deployment.yaml` mounting `settings.yaml`, `services.yaml`, etc. onto specific paths), Kubernetes does **not** propagate ConfigMap updates into those files at runtime — the kubelet only reads them at container start. After Flux reconciles a ConfigMap change for such an app, the pod needs a manual restart to pick it up: `kubectl rollout restart deployment/<name> -n <namespace>`. This doesn't apply to apps that mount a ConfigMap as a whole directory volume (e.g. pihole's `envFrom`/volume-at-a-directory pattern) — those do get live-updated, just with kubelet's usual sync delay (up to ~1 minute).
+
 ### Adding a new infrastructure controller
 
 1. Create `infrastructure/controllers/base/<controller>/` with a `HelmRelease` (or other resource) and `kustomization.yaml`.
