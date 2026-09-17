@@ -8,7 +8,10 @@ data:
     title: Sandbox Homepage
     headerStyle: clean
   services.yaml: |
-    []
+    - Applications:
+        - Podinfo:
+            href: https://podinfo.miskers.org
+            description: Podinfo demo app
   bookmarks.yaml: |
     []
   widgets.yaml: |
