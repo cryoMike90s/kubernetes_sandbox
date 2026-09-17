@@ -12,10 +12,20 @@ spec:
         app: homepage
     spec:
       serviceAccountName: homepage
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: homepage
           image: ghcr.io/gethomepage/homepage:v2.4.0
           imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
           ports:
             - name: http
               containerPort: 3000
