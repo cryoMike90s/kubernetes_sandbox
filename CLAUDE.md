@@ -9,6 +9,8 @@ This is a GitOps-managed Kubernetes learning sandbox. There is **no build system
 - **Kustomize** — layering via `base/` + `sandbox/` overlays
 - **Helm** — used inside Flux `HelmRelease` resources for complex apps
 - **External Secrets Operator (ESO)** — syncs secrets from Infisical; never store raw secrets in git
+- **Gateway API (NGINX Gateway Fabric)** — preferred way to route HTTP traffic to apps (see below); `ingress-nginx` is still installed but new routing should use `HTTPRoute`, not `Ingress`
+- **Cloudflare Tunnel (`cloudflared`)** — exposes apps under `miskers.org` to the internet without opening any router ports
 
 ---
 
@@ -79,7 +81,7 @@ Every deployable area follows the same convention:
 ```
 clusters/sandbox/          # Flux root Kustomizations — Flux bootstrapped here
 infrastructure/
-  controllers/             # Helm/OCI HelmReleases for operators (cert-manager, ESO, ingress-nginx, cnpg, metallb, nfs-driver)
+  controllers/             # Helm/OCI HelmReleases for operators (cert-manager, ESO, ingress-nginx, nginx-gateway-fabric, gateway-api-crds, cnpg, metallb, nfs-driver)
   configs/                 # CRs that configure the operators (ClusterIssuers, MetalLB pools, ExternalSecret stores, etc.)
   image-repository/        # Flux ImageRepository / ImagePolicy resources
 apps/                      # Application workloads (podinfo, pihole, keycloak, cloudflared, etc.)
@@ -132,6 +134,22 @@ cluster/resources/         # LEGACY — manually applied manifests; not reconcil
   ```bash
   git config core.hooksPath .githooks
   ```
+
+### Exposing an app via Gateway API + Cloudflare Tunnel
+
+Routing is split across two layers — don't confuse them:
+
+- **`Gateway`** (`infrastructure/configs/base/gateway-api/gateway.yaml`, `sandbox-gateway` in ns `nginx-gateway`) — the shared listener, one per cluster. `gatewayClassName: nginx` binds it to the NGINX Gateway Fabric controller (`infrastructure/controllers/base/nginx-gateway-fabric/`). HTTP-only for now (port 80) — TLS to browsers is handled by Cloudflare's edge, not this listener. `allowedRoutes.namespaces.from: All` means any namespace can attach routes to it.
+- **`HTTPRoute`** — one per app, lives next to the app's own manifests (e.g. `apps/base/podinfo/httproute.yaml`), `parentRefs` the shared `Gateway`, and picks a `hostname` + `backendRefs` to the app's `Service`.
+
+To route a new app:
+1. Add an `HTTPRoute` in `apps/base/<app>/` (see `apps/base/podinfo/httproute.yaml` as a template) with `hostnames: [<app>.miskers.org]` and `backendRefs` pointing at the app's `Service`.
+2. Add it to the app's `kustomization.yaml`.
+3. Push. No DNS or Cloudflare Tunnel change is needed — DNS for `*.miskers.org` is a **wildcard** CNAME to the tunnel (`apps/sandbox/cloudflared/cf.yaml`), so any new `<something>.miskers.org` hostname is automatically routable the moment its `HTTPRoute` exists.
+
+**Security implication of the wildcard:** because DNS and the Gateway are both wide open, adding an `HTTPRoute` with a hostname is enough to make that app internet-reachable — there's no extra review gate. Fine for public/demo apps (e.g. `podinfo`), but anything with an admin UI or sensitive data needs an explicit access control layer:
+- **Cloudflare Access (Zero Trust)**: Cloudflare dashboard → Zero Trust → Access → Applications → add a self-hosted application scoped to the specific hostname (e.g. `keycloak.miskers.org`), with a policy (email allow-list, or SSO via an identity provider). This blocks unauthenticated requests at Cloudflare's edge, before they ever reach the tunnel/cluster. This is dashboard-only configuration, not something expressed in this repo.
+- `cloudflared`'s own ingress rules live in `apps/sandbox/cloudflared/cf.yaml` (sandbox-specific, mirrors the `external-secrets` `base/`+`sandbox/` split since the tunnel name/hostname/credentials are cluster-specific) — currently a single catch-all `*.miskers.org` rule forwarding to the Gateway's service; it doesn't itself do any access control.
 
 ### Debugging reconciliation failures
 
