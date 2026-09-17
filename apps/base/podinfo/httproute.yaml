@@ -7,7 +7,7 @@ spec:
     - name: sandbox-gateway
       namespace: nginx-gateway
   hostnames:
-    - podinfo.sandbox.local
+    - podinfo.miskers.org
   rules:
     - backendRefs:
         - name: podinfo-svc

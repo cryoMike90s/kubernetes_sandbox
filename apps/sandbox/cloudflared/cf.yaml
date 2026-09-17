@@ -5,11 +5,11 @@ metadata:
   namespace: cloudflared
 data:
   config.yaml: |
-    tunnel: my-tunnel
+    tunnel: sandbox-cluster
     credentials-file: /etc/cloudflared/creds/credentials.json
     metrics: 0.0.0.0:2000
     no-autoupdate: true
     ingress:
     - hostname: "*.miskers.org"
-      service: http://ingress-nginx-controller.ingress-nginx.svc.cluster.local:80
+      service: http://sandbox-gateway-nginx.nginx-gateway.svc.cluster.local:80
     - service: http_status:404
