@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Sandbox Homepage
+    headerStyle: clean
+  services.yaml: |
+    []
+  bookmarks.yaml: |
+    []
+  widgets.yaml: |
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+        nodes:
+          show: true
+          cpu: true
+          memory: true
+  docker.yaml: |
+    {}
+  kubernetes.yaml: |
+    mode: cluster

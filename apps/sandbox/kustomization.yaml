@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - cloudflared
   - podinfo
+  - homepage
 #  - keycloak
 #  - pihole
 #  - prometheus
