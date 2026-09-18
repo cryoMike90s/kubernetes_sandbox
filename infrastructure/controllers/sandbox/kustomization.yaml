@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - calico
   - cert-manager
- # - cnpg
+  - cnpg
   - external-secrets
   - gateway-api-crds
   - ingress-nginx
