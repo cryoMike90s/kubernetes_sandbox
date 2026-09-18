@@ -1,0 +1,31 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-shared
+  namespace: postgres
+spec:
+  description: Shared Postgres cluster - each app gets its own database via a declarative Database CR
+  imageName: quay.io/enterprisedb/postgresql:16.4
+  instances: 1
+
+  storage:
+    size: 5Gi
+    storageClass: default-kubernetes-sandbox-storageclass
+
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 250m
+    limits:
+      memory: 1Gi
+
+  # Roles are declarative on the Cluster itself (CNPG has no separate Role CRD).
+  # Append one entry per app that needs its own login role; passwordSecret must
+  # live in this namespace (postgres) and provide "username"/"password" keys.
+  managed:
+    roles:
+      - name: n8n
+        ensure: present
+        login: true
+        passwordSecret:
+          name: n8n-db-credentials
