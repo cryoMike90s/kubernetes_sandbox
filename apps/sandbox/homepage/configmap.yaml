@@ -12,6 +12,9 @@ data:
         - Podinfo:
             href: https://podinfo.miskers.org
             description: Podinfo demo app
+        - Grafana:
+            href: https://grafana.miskers.org
+            description: Metrics dashboards
   bookmarks.yaml: |
     []
   widgets.yaml: |
