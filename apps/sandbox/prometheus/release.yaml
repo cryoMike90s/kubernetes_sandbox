@@ -7,13 +7,6 @@ spec:
   values:
     grafana:
       enabled: true
-      ingress:
-        enabled: true
-        ingressClassName: nginx
-        hosts:
-          - grafana-local-spt.lab
-        paths:
-          - /
       persistence:
         enabled: true
         storageClassName: default-kubernetes-sandbox-storageclass
@@ -25,13 +18,6 @@ spec:
     alertmanager:
       enabled: false
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: nginx
-        hosts:
-          - prometheus-local-spt.lab
-        paths:
-          - /
       prometheusSpec:
         storageSpec:
           volumeClaimTemplate:

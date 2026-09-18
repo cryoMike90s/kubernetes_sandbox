@@ -6,4 +6,4 @@ resources:
   - homepage
 #  - keycloak
 #  - pihole
-#  - prometheus
+  - prometheus

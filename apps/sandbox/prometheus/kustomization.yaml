@@ -4,5 +4,6 @@ namespace: monitoring
 resources:
   - ../../base/prometheus/
   - grafana-secret.yaml
+  - httproute-grafana.yaml
 patches:
   - path: release.yaml
