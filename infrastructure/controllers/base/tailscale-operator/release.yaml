@@ -13,13 +13,6 @@ spec:
         namespace: tailscale
   interval: 10m
   values:
-    oauth:
-      clientIdSecret:
-        name: tailscale-operator-oauth
-        key: client_id
-      clientSecretSecret:
-        name: tailscale-operator-oauth
-        key: client_secret
     apiServerProxyConfig:
       mode: "true"
       allowImpersonation: "true"
