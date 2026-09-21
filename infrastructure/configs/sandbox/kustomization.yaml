@@ -7,3 +7,5 @@ resources:
   - external-secrets
   - gateway-api
   - metallb
+  - coredns
+  - tailscale

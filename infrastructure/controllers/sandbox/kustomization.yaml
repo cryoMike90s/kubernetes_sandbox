@@ -13,4 +13,5 @@ resources:
   - nfs-driver
   - nfs-server-provisioner
   - nginx-gateway-fabric
+  - tailscale-operator
 
