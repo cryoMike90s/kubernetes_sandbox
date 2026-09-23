@@ -1,0 +1,19 @@
+# Exposes the registry on the tailnet as https://registry.<your-tailnet>.ts.net.
+# Tailscale's operator terminates TLS with a Let's Encrypt cert it manages itself -
+# no cert-manager involvement needed. Requires "HTTPS Certificates" enabled in the
+# Tailscale admin console for this tailnet.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: registry
+  name: registry
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: registry
+      port:
+        number: 5000
+  tls:
+    - hosts:
+        - registry
