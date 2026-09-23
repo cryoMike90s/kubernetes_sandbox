@@ -7,4 +7,3 @@ resources:
 #  - keycloak
 #  - pihole
   - prometheus
-  - registry
